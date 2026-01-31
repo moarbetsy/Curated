@@ -76,10 +76,13 @@ $setupCursorRuleDirs = @(
 )
 
 $precursorMdcRules = @(
+  'commands',
   'diagnostics',
   'issue-reporting-and-apply-report',
+  'knowledge-base',
   'python-3-14',
   'python',
+  'verification',
   'web',
   'windows-systems-and-toolchain'
 )

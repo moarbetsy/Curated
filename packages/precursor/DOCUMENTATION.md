@@ -1619,7 +1619,7 @@ jobs:
 
 **File:** `.github/workflows/precursor.yml`
 
-Runs Precursor scan on every push/PR:
+Runs Precursor scan on every push/PR (uses `project-doctor` if present):
 
 ```yaml
 name: Precursor CI
@@ -1631,10 +1631,13 @@ on:
 jobs:
   precursor:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: project-doctor
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
-      - run: bun run precursor.ps1 -Scan --json
+      - run: bun run src/cli.ts scan --json
 ```
 
 ### CI Configuration

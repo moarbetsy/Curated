@@ -157,14 +157,33 @@ async function scanFile(
  * Check if path should be ignored
  */
 function shouldIgnore(path: string, patterns: string[]): boolean {
+  const normalizedPath = normalizePath(path);
+  const candidates = normalizedPath.endsWith("/")
+    ? [normalizedPath]
+    : [normalizedPath, `${normalizedPath}/`];
+
   // Simple glob matching (basic implementation)
   for (const pattern of patterns) {
-    const regex = globToRegex(pattern);
-    if (regex.test(path)) {
+    const normalizedPattern = normalizePattern(pattern);
+    const regex = globToRegex(normalizedPattern);
+    if (candidates.some(candidate => regex.test(candidate))) {
       return true;
     }
   }
+
   return false;
+}
+
+function normalizePath(path: string): string {
+  let normalized = path.replace(/\\/g, "/");
+  if (normalized.startsWith("./")) {
+    normalized = normalized.slice(2);
+  }
+  return normalized;
+}
+
+function normalizePattern(pattern: string): string {
+  return pattern.replace(/\\/g, "/");
 }
 
 /**

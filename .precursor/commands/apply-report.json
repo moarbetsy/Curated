@@ -1,0 +1,10 @@
+{
+  "name": "apply-report",
+  "description": "List unresolved/mitigated REPORT entries and print a remediation checklist",
+  "steps": [
+    {
+      "type": "shell",
+      "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File .\\scripts\\apply-report.ps1"
+    }
+  ]
+}

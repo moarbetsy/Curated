@@ -13,13 +13,15 @@ import {
   ErrorCode,
   McpError
 } from "@modelcontextprotocol/sdk/types.js";
-import { scan, setup } from "../../src/index.js";
+import { scan } from "../../src/index.js";
 import { loadConfig } from "../../src/config.js";
 import { detectStacks } from "../../src/detector.js";
 import { runScaffold } from "../../src/scaffold.js";
 import { doctorFix } from "../../src/doctor.js";
 import { collectReport, collectReports, generateMergedReport } from "../../src/report.js";
 import { runVerification } from "../../src/verification.js";
+import { addKnowledgeEntry, readKnowledgeBase } from "../../src/knowledge.js";
+import { executeCommand, getAllCommands } from "../../src/commands.js";
 
 const server = new Server(
   {
@@ -241,7 +243,6 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
     switch (name) {
       case "doctor_diagnose": {
         const config = await loadConfig(args?.configPath as string | undefined);
-        const stacks = await detectStacks(config);
         const result = await scan({
           configPath: args?.configPath as string | undefined,
           offline: args?.offline as boolean | undefined

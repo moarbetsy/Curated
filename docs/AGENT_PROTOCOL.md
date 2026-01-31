@@ -34,7 +34,7 @@ Violating these is a *stop event*.
 
 5) **No secret leakage**
    - Never paste tokens, keys, `.env` contents, connection strings, or high-entropy strings into:
-     - `REPORT.md`, `INCIDENTS.md`, `STEPLOG.md`, commits, issues, chat logs.
+    - `docs/REPORT.md`, `docs/INCIDENTS.md`, `docs/STEPLOG.md`, commits, issues, chat logs.
    - Redact aggressively (`abcd…wxyz` or `[REDACTED]`).
    - Log *where* it was found and the pattern type, not the value.
 
@@ -95,7 +95,7 @@ Every step ends with verification and a ledger entry.
 2) **Plan** (small, testable)
 3) **Implement** (minimum viable change)
 4) **Verify** (commands + exit codes)
-5) **Log** (STEPLOG.md; plus REPORT.md/INCIDENTS.md if needed)
+5) **Log** (`docs/STEPLOG.md`; plus `docs/REPORT.md` / `docs/INCIDENTS.md` if needed)
 
 Use `STEP_TEMPLATE.md` for each step.
 
@@ -113,7 +113,7 @@ When a command fails unexpectedly:
 4) Retry exactly once after the smallest plausible fix.
 5) If still failing: propose the minimal permanent fix.
 
-Log to `REPORT.md` only if:
+Log to `docs/REPORT.md` only if:
 - It blocks progress, or
 - It risks corruption/data loss.
 
@@ -148,27 +148,27 @@ Rules:
 - If markers are missing, add them explicitly once; do not “guess merge.”
 
 ### 3.3 Append-only logs
-- `REPORT.md`, `INCIDENTS.md`, and `STEPLOG.md` are append-only.
+- `docs/REPORT.md`, `docs/INCIDENTS.md`, and `docs/STEPLOG.md` are append-only.
 - Never rewrite history; add follow-ups referencing earlier entries.
 
 ---
 
 ## 4) Reporting: what goes where
 
-### 4.1 STEPLOG.md (mandatory every step)
+### 4.1 docs/STEPLOG.md (mandatory every step)
 - One entry per step, even “no change” or “aborted.”
 - Must include commands + exit codes and verification result.
 - Keep it concise; link out to REPORT/INCIDENTS for details.
 
-### 4.2 REPORT.md (only real breakage)
-Use REPORT.md for:
+### 4.2 docs/REPORT.md (only real breakage)
+Use docs/REPORT.md for:
 - Non-zero exit codes that block normal work
 - Broken workflows (install, build, test, lint)
 - Tooling drift
 - Corruption risks (like `.mdc` becoming JSON)
 
-### 4.3 INCIDENTS.md (agent behavior failures)
-Use INCIDENTS.md for:
+### 4.3 docs/INCIDENTS.md (agent behavior failures)
+Use docs/INCIDENTS.md for:
 - Policy contradictions introduced
 - Repeated failure loops / flailing
 - Violations of Tier 1–2 rules
@@ -192,4 +192,4 @@ Boring is beautiful. Determinism is mercy.
 
 Use this verbatim to keep the agent on a leash:
 
-> Follow AGENT_PROTOCOL.md. Work only in numbered steps using STEP_TEMPLATE.md. After each step, append a STEPLOG.md entry including commands + exit codes + verification. Do NOT modify shell profiles or global machine settings. If any command fails, follow the Failure Loop and log real breakage to REPORT.md (no secrets). Stop after Step 1 unless I say continue.
+> Follow AGENT_PROTOCOL.md. Work only in numbered steps using STEP_TEMPLATE.md. After each step, append a docs/STEPLOG.md entry including commands + exit codes + verification. Do NOT modify shell profiles or global machine settings. If any command fails, follow the Failure Loop and log real breakage to docs/REPORT.md (no secrets). Stop after Step 1 unless I say continue.

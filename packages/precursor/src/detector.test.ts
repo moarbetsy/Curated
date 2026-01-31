@@ -9,7 +9,7 @@ import type { PrecursorConfig } from "./config.js";
 
 describe("detector", () => {
   const testConfig: PrecursorConfig = {
-    workspace: { mode: "auto" }
+    workspace: { mode: "subproject" }
   };
 
   beforeEach(() => {

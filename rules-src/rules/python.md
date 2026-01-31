@@ -1,5 +1,5 @@
 ---
-description: Python toolchain (uv, ruff, pyright)
+description: Python toolchain and common commands (uv, ruff, pyright).
 alwaysApply: false
 globs:
   - "**/*.py"
@@ -7,20 +7,14 @@ globs:
   - "uv.lock"
 ---
 
-# Python Development Rules
+# Python
 
-## Toolchain
-- Runtime / env: **uv**
-- Linter + formatter: **ruff**
-- Type checker: **pyright**
-
-## Commands
-- Install/sync: `uv sync`
-- Run: `uv run <command>`
-- Lint: `ruff check .`
-- Format: `ruff format .`
-- Type check: `pyright .`
-
-## Virtual environment
-- Standard path: `.venv`
-- IDE should point to the venv interpreter (don’t use system Python).
+- Follow the project's configured Python version.
+- Tooling: uv (env/runtime), ruff (lint/format), pyright (type check).
+- Commands:
+  - `uv sync`
+  - `uv run <command>`
+  - `ruff check .`
+  - `ruff format .`
+  - `pyright .`
+- Use `.venv` as the virtual environment path; point the IDE to it.

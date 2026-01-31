@@ -39,7 +39,7 @@ What “pass” means for this step.
 If needed, what gets reverted.
 
 ### Step Ledger update
-Append one entry to STEPLOG.md for this step:
+Append one entry to docs/STEPLOG.md for this step:
 - objective
 - files changed
 - commands + exit codes

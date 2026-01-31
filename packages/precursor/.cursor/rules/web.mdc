@@ -1,5 +1,5 @@
 ---
-description: Web/JS/TS toolchain (bun, biome, tsc)
+description: Web/JS/TS toolchain (bun, biome, tsc).
 alwaysApply: false
 globs:
   - "**/*.{js,jsx,ts,tsx}"
@@ -7,20 +7,13 @@ globs:
   - "bun.lock"
 ---
 
-# Web / JS / TS Development Rules
+# Web / JS / TS
 
-## Toolchain
-- Runtime + package manager: **bun**
-- Linter + formatter: **biome**
-- Type checker: **tsc**
-
-## Commands
-- Install: `bun install`
-- Run scripts: `bun run <script>`
-- Lint: `bunx biome check .`
-- Format: `bunx biome format --write .`
-- Type check: `bunx tsc --noEmit`
-
-## Lockfile
-- Preferred: `bun.lock` (text)
-- Legacy accepted: `bun.lockb` (binary)
+- Tooling: bun (runtime/pkg), biome (lint/format), tsc (types).
+- Commands:
+  - `bun install`
+  - `bun run <script>`
+  - `bunx biome check .`
+  - `bunx biome format --write .`
+  - `bunx tsc --noEmit`
+- Prefer `bun.lock` (text). `bun.lockb` is accepted if present.

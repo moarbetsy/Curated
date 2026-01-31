@@ -72,9 +72,9 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File "$env:USERPROFILE\Curated\curated.
 
 Replace `<OWNER>` and `<REPO>` with your GitHub org/repo.
 
-**One-liner (download + run):**
+**One-liner (download + run).** Uses a path variable; outer string is single-quoted so inner pwsh expands $f and $env:TEMP ('' = escaped single quote):
 ```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1' -OutFile \"$env:TEMP\bootstrap.ps1\" -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File \"$env:TEMP\bootstrap.ps1\" -RepoUrl 'https://github.com/<OWNER>/<REPO>' -Ref main"
+pwsh -NoProfile -ExecutionPolicy Bypass -Command '& { $f = Join-Path $env:TEMP ''bootstrap.ps1''; Invoke-WebRequest -Uri ''https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1'' -OutFile $f -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File $f -RepoUrl ''https://github.com/<OWNER>/<REPO>'' -Ref main }'
 ```
 
 **If you already have the repo (from repo root):**
@@ -94,3 +94,12 @@ pwsh -NoProfile -ExecutionPolicy Bypass -File ".\scripts\bootstrap.ps1" -RepoUrl
 ```powershell
 pwsh -NoProfile -ExecutionPolicy Bypass -File .\scripts\gen-rules.ps1
 ```
+
+---
+
+## Slash commands (Precursor)
+
+Slash commands are defined in `packages/precursor/precursor.json` or `.precursor/commands/*.json`.
+
+Available in this repo:
+- `/apply-report` — lists unresolved/mitigated entries in `docs/REPORT.md` and prints a remediation checklist (`.precursor/commands/apply-report.json`).

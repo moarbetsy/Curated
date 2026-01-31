@@ -12,6 +12,7 @@ export interface MergeOptions {
   backup?: boolean;
   backupDir?: string;
   atomic?: boolean;
+  arrayStrategy?: "replace" | "append-unique";
 }
 
 /**
@@ -157,7 +158,11 @@ export async function mergeFile(
 ): Promise<void> {
   const existing = loadFile(filePath);
   const merged = existing
-    ? deepMerge(existing as Record<string, unknown>, newData as Record<string, unknown>)
+    ? deepMerge(
+        existing as Record<string, unknown>,
+        newData as Record<string, unknown>,
+        { arrayStrategy: options.arrayStrategy }
+      )
     : newData;
 
   await writeFile(filePath, merged, options);

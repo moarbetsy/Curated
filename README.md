@@ -18,9 +18,9 @@ Curated is a **Cursor-first dev environment kit** with three components:
 
 On a clean Windows machine (with **winget** installed; install App Installer from Microsoft Store if needed), run the bootstrap script from a raw URL. It installs tools via winget, downloads Curated to a path without spaces (default `$env:USERPROFILE\Curated`), **restarts once** so PATH updates take effect, then runs gen-rules, doctor, and scan. Optionally creates a new project.
 
-**One-liner (replace `<OWNER>` and `<REPO>` with your GitHub org/repo; run in PowerShell):**
+**One-liner (replace `<OWNER>` and `<REPO>` with your GitHub org/repo; run in PowerShell).** Uses a path variable so the inner pwsh expands the path:
 ```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1' -OutFile \"$env:TEMP\bootstrap.ps1\" -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File \"$env:TEMP\bootstrap.ps1\" -RepoUrl 'https://github.com/<OWNER>/<REPO>' -Ref main"
+pwsh -NoProfile -ExecutionPolicy Bypass -Command '& { $f = Join-Path $env:TEMP ''bootstrap.ps1''; Invoke-WebRequest -Uri ''https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1'' -OutFile $f -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File $f -RepoUrl ''https://github.com/<OWNER>/<REPO>'' -Ref main }'
 ```
 
 Or download `scripts/bootstrap.ps1` and run:

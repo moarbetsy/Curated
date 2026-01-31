@@ -82,8 +82,7 @@ async function executeCommand(
   cwd: string = process.cwd()
 ): Promise<{ success: boolean; output: string; error?: string; exitCode?: number }> {
   return new Promise((resolve) => {
-    const [cmd, ...args] = command.split(/\s+/);
-    const proc = spawn(cmd, args, {
+    const proc = spawn(command, {
       cwd,
       shell: true,
       stdio: ["ignore", "pipe", "pipe"]

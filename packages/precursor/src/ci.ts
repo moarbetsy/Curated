@@ -2,7 +2,7 @@
  * GitHub Actions workflow generation
  */
 
-import { mkdirSync } from "node:fs";
+import { mkdirSync, existsSync } from "node:fs";
 import { mergeFile } from "./merge.js";
 import type { PrecursorConfig } from "./config.js";
 import type { PrecursorOptions } from "./index.js";
@@ -68,7 +68,7 @@ async function generateStackWorkflow(
       return;
   }
 
-  await mergeFile(workflowPath, workflow, { backup: true });
+  await mergeFile(workflowPath, workflow, { backup: true, arrayStrategy: "replace" });
 }
 
 /**
@@ -325,6 +325,7 @@ async function generatePrecursorWorkflow(
   _config: PrecursorConfig,
   _stacks: string[]
 ): Promise<void> {
+  const workingDir = existsSync("project-doctor/package.json") ? "project-doctor" : ".";
   const workflow = {
     name: "Precursor CI",
     on: {
@@ -334,6 +335,11 @@ async function generatePrecursorWorkflow(
     jobs: {
       precursor: {
         "runs-on": "ubuntu-latest",
+        defaults: {
+          run: {
+            "working-directory": workingDir
+          }
+        },
         steps: [
           {
             name: "Checkout",
@@ -345,12 +351,12 @@ async function generatePrecursorWorkflow(
           },
           {
             name: "Run Precursor",
-            run: "bun run precursor.ps1 -Scan --json"
+            run: "bun run src/cli.ts scan --json"
           }
         ]
       }
     }
   };
 
-  await mergeFile(".github/workflows/precursor.yml", workflow, { backup: true });
+  await mergeFile(".github/workflows/precursor.yml", workflow, { backup: true, arrayStrategy: "replace" });
 }

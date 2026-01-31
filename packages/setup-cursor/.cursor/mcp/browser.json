@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "cursor-ide-browser": {
+      "command": "cursor-ide-browser",
+      "env": {},
+      "args": []
+    }
+  }
+}

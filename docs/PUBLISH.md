@@ -35,7 +35,8 @@ Use `git remote -v` to see existing remotes; use `git push -u origin main` to se
 After push, the default branch should be `main`. Then this one-liner works (replace `<OWNER>` and `<REPO>`):
 
 ```powershell
-pwsh -NoProfile -ExecutionPolicy Bypass -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1' -OutFile \"$env:TEMP\bootstrap.ps1\" -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File \"$env:TEMP\bootstrap.ps1\" -RepoUrl 'https://github.com/<OWNER>/<REPO>' -Ref main"
+pwsh -NoProfile -ExecutionPolicy Bypass -Command '& { $f = Join-Path $env:TEMP ''bootstrap.ps1''; Invoke-WebRequest -Uri ''https://raw.githubusercontent.com/<OWNER>/<REPO>/main/scripts/bootstrap.ps1'' -OutFile $f -UseBasicParsing; & pwsh -NoProfile -ExecutionPolicy Bypass -File $f -RepoUrl ''https://github.com/<OWNER>/<REPO>'' -Ref main }'
 ```
+(Outer string is single-quoted so the inner pwsh expands $f and $env:TEMP; '' is an escaped single quote.)
 
 If your default branch is not `main`, use `-Ref <branch>` in the script and in the URL path (e.g. `.../master/scripts/bootstrap.ps1` and `-Ref master`).

@@ -2,7 +2,7 @@
  * Tool resolution and installation waterfall
  */
 
-import { existsSync } from "node:fs";
+import { existsSync, readdirSync } from "node:fs";
 import { join } from "node:path";
 import { execSync } from "node:child_process";
 import type { PrecursorConfig } from "./config.js";
@@ -170,13 +170,9 @@ async function checkPortable(toolId: string): Promise<ToolResult> {
 
   // Look for latest version
   try {
-    const output = execSync(`ls "${portableDir}"`, {
-      encoding: "utf-8",
-      shell: true
-    } as any);
-    const versions = (output as string)
-      .trim()
-      .split("\n")
+    const versions = readdirSync(portableDir, { withFileTypes: true })
+      .filter(entry => entry.isDirectory())
+      .map(entry => entry.name)
       .filter(v => v);
 
     if (versions.length > 0) {
