@@ -1,0 +1,29 @@
+# --- Curated: hardened ignores (repo root) ---
+
+# Dependencies / build artifacts
+**/node_modules/
+**/dist/
+**/build/
+**/.bun/
+**/.venv/
+**/.python-version.local
+
+# Local state / backups (must not be committed)
+**/.cursorkit/
+**/.precursor/backups/
+**/.precursor/state/
+**/.precursor/cache/
+**/*.bak
+**/*~
+**/*.tmp
+
+# Zip artifacts (release zips belong in GitHub Releases)
+**/*.zip
+!release/*.zip
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+
+# Keep the repo root rules and docs canonical; no snapshot directories
+archive/
